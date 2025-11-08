@@ -1,0 +1,48 @@
+    <!DOCTYPE html>
+    <html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ЕНТ: Всемирная история</title>
+        <link rel="stylesheet" href="../style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header class="test-header">
+            <a href="../index.html" class="back-link">← На главную</a>
+            <h2>ЕНТ 2025: Всемирная история</h2>
+        </header>
+
+        <main class="quiz-container">
+            <div id="progress" class="progress-bar-container">
+                Прогресс: <span id="current-q">1</span> из 40
+                <div class="progress-bar">
+                    <div id="progress-indicator" class="progress-indicator"></div>
+                </div>
+            </div>
+
+            <div id="question-area" class="card question-card">
+                <h3 id="question-text"></h3>
+                <div id="options-container" class="options-container">
+                    </div>
+                
+                <div id="feedback" class="feedback-area">
+                    </div>
+                
+                <button id="check-btn" class="action-btn check-btn">Проверить ответ</button>
+                <button id="next-btn" class="action-btn next-btn" style="display: none;">Следующий вопрос</button>
+            </div>
+            
+             <div id="results-screen" class="results-screen" style="display: none;">
+                <h2>Тест завершен!</h2>
+                <p>Ваш результат: <span id="final-score">0</span> из 40</p>
+                <p>Правильных: <span id="correct-count">0</span></p>
+                <p>Неправильных: <span id="incorrect-count">0</span></p>
+                <button onclick="window.location.reload()" class="action-btn restart-btn">Пройти снова</button>
+            </div>
+
+        </main>
+
+        <script src="../script.js"></script>
+    </body>
+    </html>

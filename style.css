@@ -1,0 +1,305 @@
+/* Общие стили и сброс */
+:root {
+    --primary-color: #007BFF; /* Спокойный синий */
+    --secondary-color: #28A745; /* Мягкий зеленый */
+    --background-color: #F4F7F9; /* Светлый фон */
+    --card-background: #FFFFFF; /* Белый для карточек */
+    --text-color: #343A40; /* Темный текст */
+    --error-color: #DC3545; /* Красный для ошибки */
+    --border-radius: 12px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Главная страница (index.html) */
+
+.main-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 20px;
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.subject-selection h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.card-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.subject-card {
+    display: block;
+    width: 100%;
+    max-width: 350px;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.subject-card:hover:not(.disabled) {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.law-card {
+    background-color: #E3F2FD; /* Светло-голубой */
+    border-left: 5px solid var(--primary-color);
+}
+
+.history-card {
+    background-color: #F1F8E9; /* Светло-зеленый */
+    border-left: 5px solid var(--secondary-color);
+}
+
+.subject-card.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Страница тестирования (test.html) */
+
+.test-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+}
+
+.back-link {
+    align-self: flex-start;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.quiz-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.card {
+    background-color: var(--card-background);
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.question-card {
+    margin-top: 20px;
+}
+
+.question-text {
+    margin-bottom: 25px;
+    font-size: 1.15rem;
+    font-weight: 500;
+}
+
+/* Прогресс-бар */
+.progress-bar-container {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: #E0E0E0;
+    border-radius: 4px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.progress-indicator {
+    height: 100%;
+    width: 0%;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease-in-out;
+}
+
+/* Варианты ответов */
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option-btn {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    text-align: left;
+    background-color: var(--background-color);
+    border: 1px solid #CCCCCC;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+    font-size: 1rem;
+}
+
+.option-btn:hover {
+    background-color: #E9ECEF;
+    border-color: var(--primary-color);
+}
+
+/* Состояния вариантов */
+.option-btn.selected {
+    border-color: var(--primary-color);
+    background-color: #D6E8FF;
+}
+
+.option-btn.correct {
+    background-color: #D4EDDA; /* Light Green */
+    border-color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.option-btn.incorrect {
+    background-color: #F8D7DA; /* Light Red */
+    border-color: var(--error-color);
+}
+
+.option-btn:disabled {
+    cursor: default;
+}
+
+/* Кнопки действий */
+.action-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.check-btn {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.check-btn:hover {
+    background-color: #0056b3;
+}
+
+.next-btn {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.next-btn:hover {
+    background-color: #1e7e34;
+}
+
+.restart-btn {
+    background-color: var(--primary-color);
+    color: white;
+    margin-top: 30px;
+}
+
+
+/* Область обратной связи (Объяснение) */
+.feedback-area {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    display: none; /* Сначала скрыто */
+}
+
+.feedback-area.correct-feedback {
+    background-color: #E6FFED;
+    border: 1px solid var(--secondary-color);
+    color: #155724;
+}
+
+.feedback-area.incorrect-feedback {
+    background-color: #FFE6E6;
+    border: 1px solid var(--error-color);
+    color: #721C24;
+}
+
+.feedback-area strong {
+    font-weight: 700;
+    display: block;
+    margin-bottom: 5px;
+}
+
+
+/* АДАПТАЦИЯ ДЛЯ МОБИЛЬНЫХ УСТРОЙСТВ (POCO C65 и др.) */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+    
+    .main-header, .test-header {
+        margin-bottom: 20px;
+    }
+    
+    .main-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .test-header h2 {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .back-link {
+        font-size: 0.9rem;
+    }
+    
+    .subject-card {
+        padding: 20px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .question-card h3 {
+        font-size: 1rem;
+    }
+
+    .option-btn {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+    
+    .action-btn {
+        padding: 12px;
+        font-size: 1rem;
+    }
+    
+    .feedback-area {
+        font-size: 0.85rem;
+    }
+}
