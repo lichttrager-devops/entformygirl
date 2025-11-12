@@ -1,7 +1,5 @@
 // =================================================================
 // 1. КОНТЕНТ (БАЗА ВОПРОСОВ: ОСНОВЫ ПРАВА)
-// 
-// Тест случайным образом выберет 40 вопросов из этого массива.
 // =================================================================
 
 const allQuizQuestions = [
@@ -790,7 +788,7 @@ const allWorldHistoryQuestions = [
         question: "В каком году была создана Организация Объединенных Наций (ООН)?",
         options: ["1919 г.", "1941 г.", "1945 г.", "1949 г."],
         answerIndex: 2,
-        explanation: "Устав ООН был подписан 26 июня 1945 года и вступил в силу 24 октября 1945 года, после окончания Второй мировой войны."
+        explanation: "Устав ООN был подписан 26 июня 1945 года и вступил в силу 24 октября 1945 года, после окончания Второй мировой войны."
     },
     {
         question: "Как называется период глобального геополитического, экономического и идеологического противостояния между СССР и США (1946-1991)?",
@@ -918,30 +916,35 @@ function selectRandomQuestions(allQuestions) {
 document.addEventListener('DOMContentLoaded', () => {
 
     // =================================================================
-    // 4. ВЫБОР ПРЕДМЕТА
+    // 4. АВТОМАТИЧЕСКИЙ ВЫБОР ПРЕДМЕТА (ИСПРАВЛЕНО)
     // =================================================================
-    
-    // !!! ИЗМЕНИТЕ ЗДЕСЬ !!!
-    // 'history' - для теста по Всемирной истории
-    // 'pravo' - для теста по Основам права
-    const subjectSelector = 'history'; 
-    
-    // -----------------------------------------------------------------
     
     let questionsToUse;
     
-    if (subjectSelector === 'history') {
+    // Проверяем заголовок HTML-страницы, чтобы понять, какой тест загружать
+    if (document.title.includes("Основы права")) {
+        questionsToUse = allQuizQuestions;
+        console.log("Загружен тест по Основам права.");
+    } else if (document.title.includes("Всемирная история")) {
         questionsToUse = allWorldHistoryQuestions;
         console.log("Загружен тест по Всемирной истории.");
     } else {
-        questionsToUse = allQuizQuestions; // По умолчанию 'pravo'
-        console.log("Загружен тест по Основам права.");
+        // Резервный вариант, если заголовок не распознан (например, на index.html)
+        // На главной странице это не вызовет ошибки, так как там нет quiz-container
+        console.log("Главная страница или неизвестный тест.");
+        questionsToUse = []; // Пустой массив, чтобы ничего не делать
     }
     
     // =================================================================
+    
+    // Находим элементы только если мы на странице теста
+    const quizContainer = document.querySelector('.quiz-container');
+    if (!quizContainer) {
+        // Если мы не на странице теста (например, на index.html), прекращаем выполнение скрипта
+        return;
+    }
 
-
-    // !!! ГЛАВНОЕ ИЗМЕНЕНИЕ: Выбираем 40 случайных вопросов из ВЫБРАННОЙ БАЗЫ !!!
+    // !!! Выбираем 40 случайных вопросов из ВЫБРАННОЙ БАЗЫ !!!
     const quizQuestions = selectRandomQuestions(questionsToUse);
     const totalQuestions = 40; // Фиксированный размер ЕНТ
 
@@ -952,7 +955,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const feedbackArea = document.getElementById('feedback');
     const progressIndicator = document.getElementById('progress-indicator');
     const currentQSpan = document.getElementById('current-q');
-    const quizContainer = document.querySelector('.quiz-container');
     const resultsScreen = document.getElementById('results-screen');
     const finalScoreSpan = document.getElementById('final-score');
 
@@ -980,6 +982,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function loadQuestion() {
         if (currentQuestionIndex >= totalQuestions) {
             showResults();
+            return;
+        }
+
+        // Проверяем, есть ли вопросы
+        if (!quizQuestions || quizQuestions.length === 0) {
+            questionText.textContent = "Ошибка: Вопросы для этого предмета не найдены.";
+            optionsContainer.innerHTML = '';
+            checkBtn.style.display = 'none';
             return;
         }
 
@@ -1075,22 +1085,31 @@ document.addEventListener('DOMContentLoaded', () => {
         loadQuestion();
     });
     
-    // Функция отображения результатов
+    // Функция отображения результатов (С ФОКУСОМ НА ИСПРАВЛЕНИЕ)
     function showResults() {
-    quizContainer.style.display = 'none';
-    resultsScreen.style.display = 'block';
-    finalScoreSpan.textContent = score;
-    // Добавляем вывод количества правильных и неправильных ответов
-    const correctEl = document.getElementById('correct-count');
-    const incorrectEl = document.getElementById('incorrect-count');
-    const incorrect = Math.max(0, totalQuestions - score);
-    if (correctEl) correctEl.textContent = score;
-    if (incorrectEl) incorrectEl.textContent = incorrect;
-    updateProgress(); // Обновляем прогресс до 100%
-}
+        quizContainer.style.display = 'none';
+        resultsScreen.style.display = 'block';
+        
+        // Обновляем итоговый счет
+        finalScoreSpan.textContent = score;
+        
+        // Находим элементы для правильных/неправильных ответов
+        const correctEl = document.getElementById('correct-count');
+        const incorrectEl = document.getElementById('incorrect-count');
+        
+        const incorrect = Math.max(0, totalQuestions - score);
+        
+        // Обновляем текст (с проверкой, что элементы существуют)
+        if (correctEl) {
+            correctEl.textContent = score;
+        }
+        if (incorrectEl) {
+            incorrectEl.textContent = incorrect;
+        }
+        
+        updateProgress(); // Обновляем прогресс до 100%
+    }
 
     // Запуск теста
-    if (document.querySelector('.quiz-container')) {
-        loadQuestion();
-    }
-}); 
+    loadQuestion();
+});
